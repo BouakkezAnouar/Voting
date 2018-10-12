@@ -5,16 +5,31 @@ session_start();
     header("Location: afficher_projets.php");
 }
 
-include("connection.php");
+
+
+$email ="";
+$password ="" ;
+$error="";
+
 if (isset($_POST['email']) && isset($_POST['password']))
 {
-    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? ");
-    $stmt->execute([$_POST['email']]);
+    include("connection.php");
+
+    $email = htmlspecialchars($_POST['email']);
+    $password =htmlspecialchars($_POST['password']);
+    
+    //if email or password is vide
+    if(empty($email) || empty($password))
+        $error = "all champs must be remplied !!" ;
+
+    else {
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? and password = ?");
+    $stmt->execute([$email, $password]);
     $user = $stmt->fetch();
 
-    
-    if ($user && $_POST['password']==$user['password'])
+    if ($user)
     {
+        //create session 
         session_start();
         $_SESSION['login']="logedin";
         $_SESSION['id']=$user['id'];
@@ -23,14 +38,33 @@ if (isset($_POST['email']) && isset($_POST['password']))
         header("Location: afficher_projets.php");
 
     } else {
-        echo "invalid";
+        $error = "email or password is worng !";
     }
 }
-else {
-    echo "all champs must be remplied !!!";
+//close connection
+$conn = null;
+    
 }
-
-
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+</head>
 
+<body>
+    <form action="login.php" method="POST">
+        email
+        <input type="email" name="email" required value="<?php if (!empty($email)) echo $email ?>"> password
+        <input type="password" name="password" required  value="<?php if (!empty($password)) echo $password ?>">
+        <button>Login</button>
+        <div ><?php if ($error && !empty($error)) echo $error ?></div>
+    </form>
+</body>
+
+</html>
