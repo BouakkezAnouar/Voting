@@ -140,11 +140,12 @@ else $isVoted =true ;
     $getProjets->execute();
     $projets = $getProjets->fetchAll();
 
-foreach ($projets as $projet) {
+foreach ($projets as $index => $projet) {
        
     ?>
         <div class="col-lg-4 col-md-6 mb-4 ">
             <div class="card <?php if ($idProjetVoted == $projet["id"]) echo " voted";  else echo "notVoted" ;?>">
+            <?php if ($index==0 ) echo '<img class="card-img-top" src="res/roi.png" height=200 alt="">'?>
               <div class="card-body">
                 <h4 class="card-title">
                   <a href="#"><?php  echo $projet['nom']?></a>
