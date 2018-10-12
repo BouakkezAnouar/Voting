@@ -19,7 +19,7 @@ if (isset($_POST['email']) && isset($_POST['password']))
     $password =htmlspecialchars($_POST['password']);
     
     //if email or password is vide
-    if(empty($email) || empty($password))
+    if(empty(trim($email)) || empty(trim($password)))
         $error = "all champs must be remplied !!" ;
 
     else {

@@ -11,7 +11,7 @@ if (isset($_POST['team'])&& isset($_POST['nomProjet']) && isset($_POST['descript
     $team=$_POST['team'];
     $description =$_POST['description'];
     
-    if (!empty($_POST['team'])&& !empty($_POST['nomProjet']) && !empty($_POST['description']))
+    if (!empty(trim($_POST['team']))&& !empty(trim($_POST['nomProjet'])) && !empty(trim($_POST['description'])))
     {
         include("connection.php");
         try

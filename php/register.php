@@ -17,7 +17,7 @@ if ((isset($_POST['nom'])) && (isset($_POST['email'])) && (isset($_POST['passwor
     $password=$_POST['password'];
     $password2=$_POST['password2'];
 
-    if ((!empty($_POST['nom'])) && (!empty($_POST['email'])) && (!empty($_POST['password'])) && (!empty($_POST['password2'])))
+    if ((!empty(trim($_POST['nom']))) && (!empty(trim($_POST['email']))) && (!empty(trim($_POST['password']))) && (!empty(trim($_POST['password2']))))
     {
         
         if ( !($_POST['password']== $_POST['password2'])) 
